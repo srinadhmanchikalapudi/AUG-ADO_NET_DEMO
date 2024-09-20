@@ -1,0 +1,41 @@
+﻿create proc spAddCustomer
+@first_name varchar(255),
+@last_name varchar(255),
+@phone varchar(25),
+@email varchar(255),
+@street varchar(255),
+@city varchar(50),
+@state varchar(25),
+@zip_code varchar(5),
+@customer_id int Out
+as
+begin
+insert into [sales].[customers] values(@first_name, @last_name, @phone,@email,@street,@city,@state,@zip_code)
+select @customer_id = SCOPE_IDENTITY()
+end
+
+
+
+declare @customer_id int
+
+exec spAddCustomer 'John','Smith','1223456','john@gmail.com','Main St','City','State','12345' , @customer_id out
+
+Print Cast(@customer_id as nvarchar(10))
+---------------------------------------------------------------------
+CREATE TABLE [sales].[customers](
+	[customer_id] [int] IDENTITY(1,1) NOT NULL,
+	[first_name] [varchar](255) NOT NULL,
+	[last_name] [varchar](255) NOT NULL,
+	[phone] [varchar](25) NULL,
+	[email] [varchar](255) NOT NULL,
+	[street] [varchar](255) NULL,
+	[city] [varchar](50) NULL,
+	[state] [varchar](25) NULL,
+	[zip_code] [varchar](5) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[customer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
