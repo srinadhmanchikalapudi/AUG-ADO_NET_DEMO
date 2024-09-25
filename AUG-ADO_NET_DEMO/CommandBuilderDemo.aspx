@@ -31,7 +31,14 @@
         </tr>
         <tr>
             <td><asp:Button ID="Button2" runat="server" Text="Update" OnClick="Button2_Click" /></td>
-            <td colspan="2"><asp:Label ID="Label1" runat="server" ForeColor="Green" Text=""></asp:Label></td>
+            <td><asp:Button ID="Button3" runat="server" Text="Delete" OnClick="Button3_Click" /></td>
+            <td><asp:Button ID="Button4" runat="server" Text="Insert" OnClick="Button4_Click" /></td>
+            <td><asp:Label ID="Label1" runat="server" ForeColor="Green" Text=""></asp:Label></td>
         </tr>
     </table>
+    <asp:Label ID="Label2" runat="server" Text="" BorderStyle="Solid"></asp:Label>
+    <asp:Label ID="Label3" runat="server" Text="" BorderStyle="Solid"></asp:Label>
+    <asp:Label ID="Label4" runat="server" Text="" BorderStyle="Solid"></asp:Label>
+
+    <asp:GridView ID="GridView1" runat="server"></asp:GridView>
 </asp:Content>

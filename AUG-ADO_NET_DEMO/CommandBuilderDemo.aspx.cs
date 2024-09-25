@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -83,6 +84,88 @@ namespace AUG_ADO_NET_DEMO
                     Label1.Text = "No Record Updated = " + rowsUpdated;
                 }
                 else {
+                    Label1.ForeColor = System.Drawing.Color.Red;
+                    Label1.Text = "No Record Updated";
+                }
+                Label2.Text = builder.GetUpdateCommand().CommandText;
+                Label3.Text = builder.GetInsertCommand().CommandText;
+                Label4.Text = builder.GetDeleteCommand().CommandText;
+            }
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from Student", con);
+                SqlCommandBuilder builder = new SqlCommandBuilder(da);
+                ds = new DataSet();
+                da.Fill(ds, "Student");
+
+                foreach (DataRow row in ds.Tables["Student"].Rows)
+                {
+                    if (row["studentId"].ToString() == TextBox1.Text)
+                    {
+                        ds.Tables["Student"].Rows.Remove(row);
+                        break;
+                    }
+                }
+
+                //DataRow[] rows = ds.Tables["Student"].Select("[studentId] <= " + TextBox1.Text);
+                //foreach (DataRow row in rows)
+                //{
+                //    ds.Tables["Student"].Rows.Remove(row);
+                //    break;
+                //}
+
+                ds.Tables["Student"].AcceptChanges();
+                
+                Label1.Text = ds.Tables["Student"].Rows.Count.ToString();
+                GridView1.DataSource = ds.Tables["Student"];
+                GridView1.DataBind();
+
+                int rowsUpdated = da.Update(ds, "Student");
+
+                if (rowsUpdated > 0)
+                {
+                    Label1.ForeColor = System.Drawing.Color.Green;
+                    Label1.Text = "No Record Updated = " + rowsUpdated;
+                }
+                else
+                {
+                    Label1.ForeColor = System.Drawing.Color.Red;
+                    Label1.Text = "No Record Updated";
+                }
+            }
+
+        }
+
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from Student", con);
+                SqlCommandBuilder builder = new SqlCommandBuilder(da);
+                ds = new DataSet();
+                da.Fill(ds, "Student");
+
+                
+                DataRow dr = ds.Tables["Student"].NewRow(); 
+                dr["studentName"] = TextBox2.Text;
+                dr["marks"] = TextBox3.Text;
+                dr["stream"] = DropDownList1.SelectedValue.ToString();
+                ds.Tables["Student"].Rows.Add(dr);
+
+                Label1.Text = ds.Tables["Student"].Rows.Count.ToString();
+
+                int rowsUpdated = da.Update(ds, "Student");
+                if (rowsUpdated > 0)
+                {
+                    Label1.ForeColor = System.Drawing.Color.Green;
+                    Label1.Text = "No Record Updated = " + rowsUpdated;
+                }
+                else
+                {
                     Label1.ForeColor = System.Drawing.Color.Red;
                     Label1.Text = "No Record Updated";
                 }
