@@ -32,7 +32,7 @@ namespace AUG_ADO_NET_DEMO
             {
                 SqlCommand cmd = new SqlCommand("spAddCustomer", con);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
+                
                 cmd.Parameters.AddWithValue("@first_name", "Partha");
                 cmd.Parameters.AddWithValue("@last_name", "Bora");
                 cmd.Parameters.AddWithValue("@phone", "111111");
@@ -41,6 +41,7 @@ namespace AUG_ADO_NET_DEMO
                 cmd.Parameters.AddWithValue("@city", "city");
                 cmd.Parameters.AddWithValue("@state", "state");
                 cmd.Parameters.AddWithValue("@zip_code", "123");
+                
 
                 SqlParameter outParam = new SqlParameter();
                 outParam.ParameterName = "@customer_id";
